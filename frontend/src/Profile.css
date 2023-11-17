@@ -1,0 +1,53 @@
+.profile h1 {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  text-align: center;
+  margin-top: 50px;
+}
+/* Profile.css */
+.edit-icon {
+  margin-left: 5px; /* Add spacing between the input field and the icon */
+  cursor: pointer; /* Change the cursor to a pointer on hover */
+  color: #007bff; /* Set the icon color (blue in this example) */
+}
+
+.edit-icon:hover {
+  color: #0056b3; /* Change the icon color on hover */
+}
+
+.form-profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: left; /* Align text in labels to the left */
+  margin-top: -100px;
+}
+.form-profile-border {
+  border: 2px solid #000;
+  padding: 20px;
+  height: auto;
+}
+
+/* Style for labels */
+label {
+  margin-bottom: 10px; /* Add spacing between labels */
+}
+
+/* Apply rounded corners to input elements */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="radio"] {
+  border-radius: 5px; /* You can adjust the value as needed */
+  margin-bottom: 10px; /* Add spacing between input fields */
+}
+
+/* Remove display: flex from .form_signup to stack input fields vertically */
+.form-profile {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* height: 100vh; */
+  margin-top: 200px;
+  margin-left: 20px;
+}

@@ -1,0 +1,27 @@
+.login-container {
+  display: flex;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  color: blue;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: center; */
+  height: 100vh; /* This ensures the component takes up the full viewport height */
+  margin-top: 200px;
+}
+/* Style the submit button */
+.submit-button {
+  background-color: #007bff; /* Initial background color */
+  color: white;
+  border: none;
+  width: 169px;
+  cursor: pointer;
+  transition: background-color 0.3s; /* Add a smooth transition effect */
+
+  /* Other button styles go here */
+}
+
+/* Change button background color on hover */
+.submit-button:hover {
+  background-color: #0056b3; /* New background color on hover */
+}

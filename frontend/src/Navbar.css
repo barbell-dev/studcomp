@@ -1,0 +1,65 @@
+/* Navbar.css */
+.navbar {
+  display: flex;
+  justify-content: space-between; /* Adjust alignment as needed */
+  align-items: center; /* Vertically center align items */
+  background-color: #333;
+  padding: 10px 20px;
+  color: white;
+}
+table {
+  width: 100%;
+}
+
+.logo img {
+  height: 40px; /* Adjust the height as needed */
+  width: auto;
+  color: white;
+  /* vertical-align: middle; */
+}
+
+.nav-links {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  list-style: none;
+  padding-bottom: 20px;
+  margin: -8px;
+  display: flex;
+  position: absolute;
+  margin-left: -1070px;
+  align-items: center;
+}
+
+.nav-links li {
+  cursor: pointer;
+  margin-bottom: 10px;
+  margin-right: 120px;
+
+  /* justify-content: center; */
+}
+
+.nav-links #profile:hover {
+  background-color: wheat;
+  color: black;
+}
+.nav-links #projects:hover {
+  background-color: wheat;
+  color: black;
+}
+
+.nav-links #teams:hover {
+  background-color: wheat;
+  color: black;
+}
+.nav-links #domains:hover {
+  background-color: wheat;
+  color: black;
+}
+.nav-links #techstack:hover {
+  background-color: wheat;
+  color: black;
+}
+.no-decoration {
+  text-decoration: none;
+  color: inherit;
+}

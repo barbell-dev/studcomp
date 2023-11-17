@@ -1,0 +1,16 @@
+.logout {
+  margin-left: 10px;
+  margin-top: -180px;
+  padding: 10px 20px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.logout:hover {
+  background-color: #555;
+}
