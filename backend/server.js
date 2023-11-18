@@ -426,6 +426,30 @@ function useDatabase() {
                     }
                   );
                 });
+                app.delete("/api/delete-account", (req, res) => {
+                  const srn = req.body.srn; // Assuming you send the user ID in the request body
+
+                  db.query(
+                    "DELETE FROM signup_data WHERE srn = ?",
+                    [srn],
+                    (deleteErr) => {
+                      if (deleteErr) {
+                        console.error(
+                          "Error deleting user account:",
+                          deleteErr
+                        );
+                        res
+                          .status(500)
+                          .json({ error: "Internal server error" });
+                      } else {
+                        console.log("User account deleted successfully");
+                        res
+                          .status(200)
+                          .json({ message: "Account deleted successfully" });
+                      }
+                    }
+                  );
+                });
                 // API endpoint to handle user data update
                 app.put("/api/update-profile", (req, res) => {
                   // Your existing update profile endpoint code...

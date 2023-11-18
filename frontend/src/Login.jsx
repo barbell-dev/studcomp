@@ -53,7 +53,7 @@ export default function Login() {
         console.log("No SRN found.");
       }
     } catch (error) {
-      alert("Error.");
+      alert("Error.Login failed because of invalid credentials.");
       console.error("Error occurred during login:", error);
     }
   };
@@ -70,7 +70,7 @@ export default function Login() {
               type="text"
               placeholder="Enter your SRN"
               name="srn"
-              value={formData.srn}
+              checked={formData.srn}
               onChange={handleInputChange}
               required
             />
@@ -79,7 +79,7 @@ export default function Login() {
               type="password"
               placeholder="Enter your password"
               name="password"
-              value={formData.password}
+              checked={formData.password}
               onChange={handleInputChange}
               required
             />
