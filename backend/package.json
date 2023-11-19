@@ -6,7 +6,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node login.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "admin": "node admin.js"
   },
   "keywords": [],
   "author": "udaynvarun",

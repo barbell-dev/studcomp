@@ -90,6 +90,8 @@ export default function Login() {
           </form>
           <p className="signup-link">
             Don't have an account? <Link to="/signup">Create one.</Link>
+            <br></br>
+            <Link to="/admin">Click here for admin login.</Link>
           </p>
         </div>
       )}

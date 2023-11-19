@@ -8,15 +8,17 @@ import Projects from "./Projects";
 import Teams from "./Teams";
 import Techstack from "./Techstack";
 import store from "./store.js"; // Replace './store' with the actual path to your Redux store file.
-
+import Admin from "./Admin.jsx";
 import { Provider } from "react-redux"; // Import Provider from Redux
-
+import Dashboard from "./Dashboard.jsx";
 function App() {
   return (
     <Provider store={store}>
       <Router>
         <Routes>
           <Route path="/" element={<Home />} /> {/* Use 'element' prop */}
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/signup" element={<Signup />} />{" "}
           <Route path="/profile" element={<Profile />} />
           <Route path="/domains" element={<Domains />} />
