@@ -1,0 +1,56 @@
+/* Dashboard.css */
+
+.dashboard {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  padding: 20px;
+  position: relative;
+}
+
+#heading {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+h2 {
+  margin-top: 20px;
+}
+
+table {
+  width: 80%; /* Adjust the width as needed */
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+td {
+  text-align: left;
+}
+
+/* Add a new column for the delete button */
+td.delete-cell {
+  text-align: center;
+}
+
+.delete-button {
+  background-color: #ff6666;
+  color: #fff;
+  padding: 6px 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.dashboard #ld {
+  position: absolute;
+  margin-left: 1200px;
+  margin-top: -40px;
+}

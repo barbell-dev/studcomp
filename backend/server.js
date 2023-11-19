@@ -322,7 +322,114 @@ function useDatabase() {
                     "'Domains' table is not empty, skipped initial insertion."
                   );
                 }
+                app.post("/api/signup", (req, res) => {
+                  const formData = req.body;
 
+                  db.query(
+                    "SELECT * FROM signup_data WHERE srn = ?",
+                    [formData.srn],
+                    (err, results) => {
+                      if (err) {
+                        console.error("Error checking user existence:", err);
+                        res
+                          .status(500)
+                          .json({ error: "Internal server error" });
+                      } else if (results.length > 0) {
+                        res.status(400).json({
+                          error:
+                            "User with this SRN already exists. Please login.",
+                        });
+                      } else {
+                        db.query(
+                          "SELECT * FROM signup_data WHERE email = ?",
+                          [formData.email],
+                          (emailErr, emailResults) => {
+                            if (emailErr) {
+                              console.error(
+                                "Error checking user existence (Email):",
+                                emailErr
+                              );
+                              res
+                                .status(500)
+                                .json({ error: "Internal server error" });
+                            } else if (emailResults.length > 0) {
+                              res.status(402).json({
+                                error:
+                                  "User with this email already exists. Please login.",
+                              });
+                            } else {
+                              insertSignupData();
+                            }
+                          }
+                        );
+                      }
+
+                      function insertSignupData() {
+                        const values = [
+                          formData.name,
+                          formData.email,
+                          formData.password,
+                          formData.srn,
+                          formData.gender,
+                          formData.campus,
+                          parseFloat(formData.cgpa),
+                          formData.githubLink,
+                        ];
+
+                        db.query(
+                          "INSERT INTO signup_data(name,email,password,srn,gender,campus,cgpa,githubLink) VALUES (?,?,?,?,?,?,?,?)",
+                          values,
+                          (insertErr) => {
+                            if (insertErr) {
+                              console.error(
+                                "Error inserting data into 'signup_data' table:",
+                                insertErr
+                              );
+                              res
+                                .status(500)
+                                .json({ error: "Internal server error" });
+                            } else {
+                              console.log(
+                                "Data inserted into 'signup_data' table"
+                              );
+                              res
+                                .status(200)
+                                .json({ message: "Signup successful" });
+                            }
+                          }
+                        );
+                      }
+                    }
+                  );
+                });
+
+                app.delete("/api/delete-account", (req, res) => {
+                  const { srn } = req.body;
+
+                  // Add logic to delete the user with the specified SRN from the 'signup_data' table
+                  db.query(
+                    "DELETE FROM signup_data WHERE srn = ?",
+                    [srn],
+                    (err, results) => {
+                      if (err) {
+                        console.error("Error deleting account:", err);
+                        res
+                          .status(500)
+                          .json({ error: "Internal server error" });
+                      } else {
+                        if (results.affectedRows > 0) {
+                          // Account deleted successfully
+                          res
+                            .status(200)
+                            .json({ message: "Account deleted successfully" });
+                        } else {
+                          // No user found with the specified SRN
+                          res.status(404).json({ error: "User not found" });
+                        }
+                      }
+                    }
+                  );
+                });
                 // API endpoint to fetch all domains
                 app.get("/api/domains", (req, res) => {
                   db.query(
@@ -355,11 +462,9 @@ function useDatabase() {
                           .json({ error: "Internal server error" });
                       } else {
                         console.log("Stored procedure called successfully");
-                        res
-                          .status(200)
-                          .json({
-                            message: "Stored procedure executed successfully",
-                          });
+                        res.status(200).json({
+                          message: "Stored procedure executed successfully",
+                        });
                       }
                     }
                   );
@@ -412,91 +517,6 @@ function useDatabase() {
                   });
                 });
 
-                // API endpoint to handle user signup
-                app.post("/api/signup", (req, res) => {
-                  // Your existing signup endpoint code...
-                  db.query(
-                    "SELECT * FROM signup_data WHERE srn = ?",
-                    [formData.srn],
-                    (err, results) => {
-                      if (err) {
-                        console.error("Error checking user existence:", err);
-                        res
-                          .status(500)
-                          .json({ error: "Internal server error" });
-                      } else if (results.length > 0) {
-                        // User with the provided SRN already exists
-                        res.status(400).json({
-                          error:
-                            "User with this SRN already exists. Please login.",
-                        });
-                      } else {
-                        db.query(
-                          "SELECT * FROM signup_data WHERE email = ?",
-                          [formData.email],
-                          (emailErr, emailResults) => {
-                            if (emailErr) {
-                              console.error(
-                                "Error checking user existence (Email):",
-                                emailErr
-                              );
-                              res
-                                .status(500)
-                                .json({ error: "Internal server error" });
-                            } else if (emailResults.length > 0) {
-                              // User with the provided email already exists
-                              res.status(402).json({
-                                error:
-                                  "User with this email already exists. Please login.",
-                              });
-                            } else {
-                              // The 'signup_data' table already exists, so just add data to it
-                              insertSignupData();
-                            }
-                          }
-                        );
-                      }
-
-                      // Function to insert signup data into the 'signup_data' table
-                      function insertSignupData() {
-                        // Your existing insertion code...
-                        const values = [
-                          formData.name,
-                          formData.email,
-                          formData.password,
-                          formData.srn,
-                          formData.gender,
-                          formData.campus,
-                          parseFloat(formData.cgpa), // Convert cgpa to float
-                          formData.githubLink,
-                        ];
-
-                        db.query(
-                          "INSERT INTO signup_data(name,email,password,srn,gender,campus,cgpa,githubLink) VALUES (?,?,?,?,?,?,?,?)",
-                          values,
-                          (insertErr) => {
-                            if (insertErr) {
-                              console.error(
-                                "Error inserting data into 'signup_data' table:",
-                                insertErr
-                              );
-                              res
-                                .status(500)
-                                .json({ error: "Internal server error" });
-                            } else {
-                              console.log(
-                                "Data inserted into 'signup_data' table"
-                              );
-                              res
-                                .status(200)
-                                .json({ message: "Signup successful" });
-                            }
-                          }
-                        );
-                      }
-                    }
-                  );
-                });
                 // API endpoint to handle user data update
                 app.put("/api/update-profile", (req, res) => {
                   // Your existing update profile endpoint code...

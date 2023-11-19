@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Dashboard from "./Dashboard";
+import "./Admin.css";
 export default function Admin() {
   const [adminData, setadminData] = useState({
     password: "",
@@ -35,12 +36,12 @@ export default function Admin() {
     });
   };
   return (
-    <div>
+    <div className="admin">
       {showDashboard ? (
         <Dashboard />
       ) : (
         <div>
-          <h1>Admin Login</h1>
+          <h1 className="admin-heading">Admin Login</h1>
           <form className="admin-form" onSubmit={handleAdminLogin}>
             <input
               type="password"
