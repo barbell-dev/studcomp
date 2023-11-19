@@ -5,3 +5,24 @@
   text-align: center;
   margin-top: 50px;
 }
+.input-fields label,
+.input-fields input {
+  display: inline-block;
+  margin-right: 10px; /* Adjust margin as needed */
+}
+.input-fields {
+  text-align: center;
+}
+.projects h2 {
+  text-align: center;
+}
+.buttonalign {
+  text-align: center;
+}
+.black-line {
+  border-bottom: 3px solid black;
+  margin-bottom: 10px; /* Adjust margin as needed */
+}
+.search-by {
+  text-align: center;
+}

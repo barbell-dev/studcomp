@@ -340,10 +340,81 @@ function useDatabase() {
                   );
                 });
 
+                app.post("/api/addProject", (req, res) => {
+                  const { projectName, domainId } = req.body;
+
+                  // Call the MySQL stored procedure
+                  db.query(
+                    "CALL AddProject(?, ?)",
+                    [projectName, domainId],
+                    (err, results) => {
+                      if (err) {
+                        console.error("Error calling stored procedure:", err);
+                        res
+                          .status(500)
+                          .json({ error: "Internal server error" });
+                      } else {
+                        console.log("Stored procedure called successfully");
+                        res
+                          .status(200)
+                          .json({
+                            message: "Stored procedure executed successfully",
+                          });
+                      }
+                    }
+                  );
+                });
+                // API endpoint to find projects based on selected criteria (projectName or domainId)
+                app.post("/api/findProjects", (req, res) => {
+                  const { searchBy, searchText } = req.body;
+                  console.log(searchText);
+                  // Define the appropriate procedure name based on the selected search criteria
+                  let procedureName;
+                  if (searchBy === "projectName") {
+                    procedureName = "FindProjectsByProjectName";
+                  } else if (searchBy === "domainId") {
+                    procedureName = "FindProjectsByDomainId";
+                  } else {
+                    return res
+                      .status(400)
+                      .json({ error: "Invalid search criteria" });
+                  }
+
+                  // Call the corresponding stored procedure with searchText as parameter
+                  db.query(
+                    `CALL ${procedureName}(?)`,
+                    [searchText],
+                    (err, results) => {
+                      if (err) {
+                        console.error("Error executing stored procedure:", err);
+                        res
+                          .status(500)
+                          .json({ error: "Internal server error" });
+                      } else {
+                        // console.log(results);
+                        console.log(
+                          `Projects found using ${searchBy}:`,
+                          results
+                        );
+                        res.status(200).json(results);
+                      }
+                    }
+                  );
+                });
+                app.get("/api/getUserProjects", (req, res) => {
+                  db.query("SELECT * FROM projects", (err, results) => {
+                    if (err) {
+                      console.error("Error fetching user projects:", err);
+                      res.status(500).json({ error: "Internal server error" });
+                    } else {
+                      res.status(200).json(results);
+                    }
+                  });
+                });
+
                 // API endpoint to handle user signup
                 app.post("/api/signup", (req, res) => {
                   // Your existing signup endpoint code...
-                  formData = req.body;
                   db.query(
                     "SELECT * FROM signup_data WHERE srn = ?",
                     [formData.srn],
@@ -422,30 +493,6 @@ function useDatabase() {
                             }
                           }
                         );
-                      }
-                    }
-                  );
-                });
-                app.delete("/api/delete-account", (req, res) => {
-                  const srn = req.body.srn; // Assuming you send the user ID in the request body
-
-                  db.query(
-                    "DELETE FROM signup_data WHERE srn = ?",
-                    [srn],
-                    (deleteErr) => {
-                      if (deleteErr) {
-                        console.error(
-                          "Error deleting user account:",
-                          deleteErr
-                        );
-                        res
-                          .status(500)
-                          .json({ error: "Internal server error" });
-                      } else {
-                        console.log("User account deleted successfully");
-                        res
-                          .status(200)
-                          .json({ message: "Account deleted successfully" });
                       }
                     }
                   );
