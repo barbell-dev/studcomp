@@ -5,6 +5,22 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import Login from "./Login.jsx";
 import LogoutButton from "./LogoutButton";
+const initialTechStackState = {
+  react: false,
+  angular: false,
+  vue: false,
+  flutter: false,
+  django: false,
+  flask: false,
+  mysql: false,
+  php: false,
+  mongodb: false,
+  nodejs: false,
+  express: false,
+  rails: false,
+  swift: false,
+  reactnative: false,
+};
 function Signup() {
   // Step 1: Create an initial empty array to hold the form data
   // const [formData, setFormData] = useState([]);
@@ -50,32 +66,30 @@ function Signup() {
     cgpa: "",
     name: "",
     githubLink: "",
-    react: "",
-    angular: "",
-    vue: "",
-    flutter: "",
-    django: "",
-    flask: "",
-    mysql: "",
-    php: "",
-    mongodb: "",
-    node: "",
-    express: "",
-    rails: "",
-    swift: "",
-    reactnative: "",
+
+    techstack: { ...initialTechStackState },
   });
 
   const [showLogin, setShowLogin] = useState(false); // Initialize to false
   const handleInputChange = async (event) => {
-    const { name, value } = event.target;
+    const { name, value, type, checked } = event.target;
     let errorMessage = "";
     // const hashedPassword = await bcrypt.hash(formData.password, 10);
     // formData.password = hashedPassword;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    if (type === "checkbox") {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        techstack: {
+          ...prevFormData.techstack,
+          [value]: checked,
+        },
+      }));
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
 
   const handleSubmit = async (event) => {
@@ -128,6 +142,22 @@ function Signup() {
         return;
       }
     }
+    const techstack = Object.keys(formData.techstack)
+      .filter((tech) => formData.techstack[tech])
+      .join(",");
+
+    const dataToSend = {
+      email: formData.email,
+      password: formData.password,
+      srn: formData.srn,
+      gender: formData.gender,
+      campus: formData.campus,
+      cgpa: formData.cgpa,
+      name: formData.name,
+      githubLink: formData.githubLink,
+      techstack: techstack,
+    };
+
     try {
       // console.log(formData);
       const response = await fetch("http://localhost:3000/api/signup", {
@@ -136,7 +166,7 @@ function Signup() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(dataToSend),
       });
 
       if (response.ok) {
@@ -321,251 +351,172 @@ function Signup() {
               </div>
               <br />
               <div>
-                <label>
-                  <p className="techstack-text">Tech Stack</p>
-                  <br />
-                  <div className="techstacks">
-                    <label className="react">
-                      <input
-                        type="checkbox"
-                        name="react"
-                        value={formData.react}
-                      />
-                      React
-                    </label>
-                    <input
-                      type="range"
-                      name="reactSlider"
-                      min="1"
-                      max="10"
-                      className="slider"
-                    />
-                    <br />
+                {/* React */}
+                <label className="react">
+                  <input
+                    type="checkbox"
+                    name="techstack"
+                    value="react"
+                    checked={formData.techstack.react}
+                    onChange={handleInputChange}
+                  />
+                  React
+                </label>
 
-                    <label className="angular">
-                      <input
-                        type="checkbox"
-                        name="angular"
-                        value={formData.angular}
-                      />
-                      Angular
-                    </label>
-                    <input
-                      type="range"
-                      name="angularSlider"
-                      min="1"
-                      max="10"
-                      className="slider"
-                    />
-                    <br />
-                    <label className="vue">
-                      <input type="checkbox" name="vue" value={formData.vue} />
-                      Vue
-                    </label>
-                    <input
-                      type="range"
-                      name="vueSlider"
-                      min="1"
-                      max="10"
-                      className="slider"
-                    />
-                    <br />
-                    <label className="flutter">
-                      <input
-                        type="checkbox"
-                        name="flutter"
-                        value={formData.flutter}
-                      />
-                      Flutter
-                    </label>
-                    <input
-                      type="range"
-                      name="flutterSlider"
-                      min="1"
-                      max="10"
-                      className="slider"
-                    />
-                    <br />
-                    {/* Add checkboxes for additional skills here */}
-                    {/* Django */}
-                    <label className="django">
-                      <input
-                        type="checkbox"
-                        name="django"
-                        value={formData.django}
-                      />
-                      Django
-                    </label>
-                    <input
-                      type="range"
-                      name="djangoSlider"
-                      min="1"
-                      max="10"
-                      className="slider"
-                    />
-                    <br />
+                {/* Angular */}
+                <label className="angular">
+                  <input
+                    type="checkbox"
+                    name="techstack"
+                    value="angular"
+                    checked={formData.techstack.angular}
+                    onChange={handleInputChange}
+                  />
+                  Angular
+                </label>
 
-                    {/* Flask */}
-                    <label className="flask">
-                      <input
-                        type="checkbox"
-                        name="flask"
-                        value={formData.flask}
-                      />
-                      Flask
-                    </label>
-                    <input
-                      type="range"
-                      name="flaskSlider"
-                      min="1"
-                      max="10"
-                      className="slider"
-                    />
-                    <br />
+                {/* Vue */}
+                <label className="vue">
+                  <input
+                    type="checkbox"
+                    name="techstack"
+                    value="vue"
+                    checked={formData.techstack.vue}
+                    onChange={handleInputChange}
+                  />
+                  Vue
+                </label>
 
-                    {/* NodeJS */}
-                    <label className="nodejs">
-                      <input
-                        type="checkbox"
-                        name="nodejs"
-                        value={formData.node}
-                      />
-                      NodeJS
-                    </label>
-                    <input
-                      type="range"
-                      name="nodejsSlider"
-                      min="1"
-                      max="10"
-                      className="slider"
-                    />
-                    <br />
+                {/* Flutter */}
+                <label className="flutter">
+                  <input
+                    type="checkbox"
+                    name="techstack"
+                    value="flutter"
+                    checked={formData.techstack.flutter}
+                    onChange={handleInputChange}
+                  />
+                  Flutter
+                </label>
 
-                    {/* Express */}
-                    <label className="express">
-                      <input
-                        type="checkbox"
-                        name="express"
-                        value={formData.express}
-                      />
-                      Express
-                    </label>
-                    <input
-                      type="range"
-                      name="expressSlider"
-                      min="1"
-                      max="10"
-                      className="slider"
-                    />
-                    <br />
+                {/* Django */}
+                <label className="django">
+                  <input
+                    type="checkbox"
+                    name="techstack"
+                    value="django"
+                    checked={formData.techstack.django}
+                    onChange={handleInputChange}
+                  />
+                  Django
+                </label>
 
-                    {/* Ruby on Rails */}
-                    <label className="rails">
-                      <input
-                        type="checkbox"
-                        name="rails"
-                        value={formData.rails}
-                      />
-                      Ruby on Rails
-                    </label>
-                    <input
-                      type="range"
-                      name="railsSlider"
-                      min="1"
-                      max="10"
-                      className="slider"
-                      id="rails-slider"
-                    />
-                    <br />
+                {/* Flask */}
+                <label className="flask">
+                  <input
+                    type="checkbox"
+                    name="techstack"
+                    value="flask"
+                    checked={formData.techstack.flask}
+                    onChange={handleInputChange}
+                  />
+                  Flask
+                </label>
 
-                    {/* PHP */}
-                    <label className="php">
-                      <input type="checkbox" name="php" value={formData.php} />
-                      PHP
-                    </label>
-                    <input
-                      type="range"
-                      name="phpSlider"
-                      min="1"
-                      max="10"
-                      className="slider"
-                    />
-                    <br />
+                {/* NodeJS */}
+                <label className="nodejs">
+                  <input
+                    type="checkbox"
+                    name="techstack"
+                    value="nodejs"
+                    checked={formData.techstack.nodejs}
+                    onChange={handleInputChange}
+                  />
+                  NodeJS
+                </label>
 
-                    {/* MySQL */}
-                    <label className="mysql">
-                      <input
-                        type="checkbox"
-                        name="mysql"
-                        value={formData.mysql}
-                      />
-                      MySQL
-                    </label>
-                    <input
-                      type="range"
-                      name="mysqlSlider"
-                      min="1"
-                      max="10"
-                      className="slider"
-                    />
-                    <br />
+                {/* Express */}
+                <label className="express">
+                  <input
+                    type="checkbox"
+                    name="techstack"
+                    value="express"
+                    checked={formData.techstack.express}
+                    onChange={handleInputChange}
+                  />
+                  Express
+                </label>
 
-                    {/* MongoDB */}
-                    <label className="mongodb">
-                      <input
-                        type="checkbox"
-                        name="mongodb"
-                        value={formData.mongodb}
-                      />
-                      MongoDB
-                    </label>
-                    <input
-                      type="range"
-                      name="mongodbSlider"
-                      min="1"
-                      max="10"
-                      className="slider"
-                      id="mongodb-slider"
-                    />
-                    <br />
+                {/* Ruby on Rails */}
+                <label className="rails">
+                  <input
+                    type="checkbox"
+                    name="techstack"
+                    value="rails"
+                    checked={formData.techstack.rails}
+                    onChange={handleInputChange}
+                  />
+                  Ruby on Rails \
+                </label>
 
-                    {/* Swift */}
-                    <label className="swift">
-                      <input
-                        type="checkbox"
-                        name="swift"
-                        value={formData.swift}
-                      />
-                      Swift
-                    </label>
-                    <input
-                      type="range"
-                      name="swiftSlider"
-                      min="1"
-                      max="10"
-                      className="slider"
-                    />
-                    <br />
+                {/* PHP */}
+                <label className="php">
+                  <input
+                    type="checkbox"
+                    name="techstack"
+                    value="php"
+                    checked={formData.techstack.php}
+                    onChange={handleInputChange}
+                  />
+                  PHP
+                </label>
 
-                    {/* React Native */}
-                    <label className="reactnative">
-                      <input
-                        type="checkbox"
-                        name="reactnative"
-                        value={formData.reactnative}
-                      />
-                      React Native
-                    </label>
-                    <input
-                      type="range"
-                      name="reactnativeSlider"
-                      min="1"
-                      max="10"
-                      className="slider"
-                      id="reactnative-slider"
-                    />
-                    <br />
-                  </div>
+                {/* MySQL */}
+                <label className="mysql">
+                  <input
+                    type="checkbox"
+                    name="techstack"
+                    value="mysql"
+                    checked={formData.techstack.mysql}
+                    onChange={handleInputChange}
+                  />
+                  MySQL
+                </label>
+
+                {/* MongoDB */}
+                <label className="mongodb">
+                  <input
+                    type="checkbox"
+                    name="techstack"
+                    value="mongodb"
+                    checked={formData.techstack.mongodb}
+                    onChange={handleInputChange}
+                  />
+                  MongoDB
+                </label>
+
+                {/* Swift */}
+                <label className="swift">
+                  <input
+                    type="checkbox"
+                    name="techstack"
+                    value="swift"
+                    checked={formData.techstack.swift}
+                    onChange={handleInputChange}
+                  />
+                  Swift
+                </label>
+
+                {/* React Native */}
+                <label className="reactnative">
+                  <input
+                    type="checkbox"
+                    name="techstack"
+                    value="reactnative"
+                    checked={formData.techstack.reactnative}
+                    onChange={handleInputChange}
+                  />
+                  React Native
                 </label>
               </div>
               <div>

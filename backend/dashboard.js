@@ -36,7 +36,18 @@ db.connect((err) => {
       }
     });
   });
-
+  app.get("/api/dashboardcount", (req, res) => {
+    //Retrieve the number of records.
+    db.query("SELECT COUNT(*) as count FROM signup_data", (err, results) => {
+      if (err) {
+        console.log("Error fetching the number of records:", err);
+        res.status(500).json({ error: "Internal server error" });
+      } else {
+        res.status(200).json(results[0].count);
+        // console.log(results[0].count);
+      }
+    });
+  });
   app.listen(3003, () => {
     console.log("Dashboard server is running on port 3003");
   });

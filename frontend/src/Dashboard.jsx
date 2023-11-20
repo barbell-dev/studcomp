@@ -32,12 +32,28 @@ export default function Dashboard() {
   };
 
   const [userList, setUserList] = useState([]);
-
+  const [userCount, setUserCount] = useState(0);
   useEffect(() => {
     // Fetch data from the server when the component mounts
+    fetchCount();
     fetchData();
   }, []);
-
+  const fetchCount = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:3003/api/dashboardcount"
+      );
+      if (response.status === 200) {
+        setUserCount(response.data);
+      } else {
+        console.error("Error fetching the number of records.", response.status);
+      }
+    } catch {
+      console.error(
+        "Error occured while fetching the number of records. (Catch block)"
+      );
+    }
+  };
   const fetchData = async () => {
     try {
       const response = await axios.get("http://localhost:3003/api/dashboard");
@@ -59,6 +75,7 @@ export default function Dashboard() {
       <h1 id="heading">Dashboard</h1>
       <div>
         <h2>User List</h2>
+        Total number of users : {userCount}
         <table>
           <thead>
             <tr>
@@ -100,7 +117,6 @@ export default function Dashboard() {
             ))}
           </tbody>
         </table>
-
         <div id="ld">
           <LogoutButton />
         </div>

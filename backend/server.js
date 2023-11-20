@@ -359,6 +359,7 @@ function useDatabase() {
                               });
                             } else {
                               insertSignupData();
+                              insertTechstackData();
                             }
                           }
                         );
@@ -392,12 +393,98 @@ function useDatabase() {
                               console.log(
                                 "Data inserted into 'signup_data' table"
                               );
+                              // The SRN and techstack values are logged here
+                              console.log(
+                                "Inserting techstack data for SRN:",
+                                formData.srn
+                              );
+                              console.log(
+                                "Techstack values:",
+                                formData.techstack
+                              );
+                              insertTechstackData(
+                                formData.srn,
+                                formData.techstack
+                              );
                               res
                                 .status(200)
                                 .json({ message: "Signup successful" });
                             }
                           }
                         );
+                      }
+
+                      function insertTechstackData(srn, techstack) {
+                        console.log("Inserting techstack data for SRN:", srn);
+                        console.log("Techstack values:", techstack);
+                        // Prepare an object with default values for all tech columns
+                        if (techstack && Array.isArray(techstack)) {
+                          const techstackValues = {
+                            srn,
+                            react: false,
+                            angular: false,
+                            vue: false,
+                            flutter: false,
+                            django: false,
+                            flask: false,
+                            nodejs: false,
+                            express: false,
+                            rubyonrails: false,
+                            php: false,
+                            mysql: false,
+                            mongodb: false,
+                            swift: false,
+                            reactnative: false,
+                          };
+                          // Update the object based on the selected techstack in the signup form
+                          techstack.forEach((tech) => {
+                            // Convert the tech value to lowercase for case-insensitive comparison
+                            const techLowerCase = tech.toLowerCase();
+
+                            // Check if the tech value is a valid column name
+                            if (techstackValues.hasOwnProperty(techLowerCase)) {
+                              techstackValues[techLowerCase] = true;
+                            } else {
+                              console.warn(
+                                `Ignoring invalid tech value: ${tech}`
+                              );
+                            }
+                          });
+
+                          db.query(
+                            "INSERT INTO techstack(srn, react, angular, vue,flutter,django,flask,nodejs,express,rubyonrails,php,mysql,mongodb,swift,reactnative) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                            [
+                              techstackValues.srn,
+                              techstackValues.react,
+                              techstackValues.angular,
+                              techstackValues.vue,
+                              techstackValues.flutter,
+                              techstackValues.django,
+                              techstackValues.flask,
+                              techstackValues.nodejs,
+                              techstackValues.express,
+                              techstackValues.rubyonrails,
+                              techstackValues.php,
+                              techstackValues.mysql,
+                              techstackValues.mongodb,
+                              techstackValues.swift,
+                              techstackValues.reactnative,
+                            ],
+                            (insertTechstackErr) => {
+                              if (insertTechstackErr) {
+                                console.error(
+                                  "Error inserting data into 'techstack' table:",
+                                  insertTechstackErr
+                                );
+                                // Handle the error as needed
+                              } else {
+                                console.log(
+                                  "Techstack data inserted into 'techstack' table"
+                                );
+                              }
+                            }
+                          );
+                        }
                       }
                     }
                   );
@@ -448,12 +535,12 @@ function useDatabase() {
                 });
 
                 app.post("/api/addProject", (req, res) => {
-                  const { projectName, domainId } = req.body;
-
+                  const { projectName, domainId, srn } = req.body;
+                  // console.log(srn);
                   // Call the MySQL stored procedure
                   db.query(
-                    "CALL AddProject(?, ?)",
-                    [projectName, domainId],
+                    "CALL AddProject(?, ?, ?)",
+                    [projectName, domainId, srn],
                     (err, results) => {
                       if (err) {
                         console.error("Error calling stored procedure:", err);
@@ -471,24 +558,25 @@ function useDatabase() {
                 });
                 // API endpoint to find projects based on selected criteria (projectName or domainId)
                 app.post("/api/findProjects", (req, res) => {
-                  const { searchBy, searchText } = req.body;
+                  const { searchBy, searchText, srn } = req.body;
                   console.log(searchText);
+                  console.log(srn);
                   // Define the appropriate procedure name based on the selected search criteria
                   let procedureName;
                   if (searchBy === "projectName") {
-                    procedureName = "FindProjectsByProjectName";
+                    procedureName = "FindProjectsByProjectNameAndSRN";
                   } else if (searchBy === "domainId") {
-                    procedureName = "FindProjectsByDomainId";
+                    procedureName = "FindProjectsByDomainIdWithSRN";
                   } else {
                     return res
                       .status(400)
                       .json({ error: "Invalid search criteria" });
                   }
-
+                  // console.log()
                   // Call the corresponding stored procedure with searchText as parameter
                   db.query(
-                    `CALL ${procedureName}(?)`,
-                    [searchText],
+                    `CALL ${procedureName}(?,?)`,
+                    [searchText, srn],
                     (err, results) => {
                       if (err) {
                         console.error("Error executing stored procedure:", err);
@@ -505,16 +593,26 @@ function useDatabase() {
                       }
                     }
                   );
+                  console.log(result);
                 });
-                app.get("/api/getUserProjects", (req, res) => {
-                  db.query("SELECT * FROM projects", (err, results) => {
-                    if (err) {
-                      console.error("Error fetching user projects:", err);
-                      res.status(500).json({ error: "Internal server error" });
-                    } else {
-                      res.status(200).json(results);
+                app.post("/api/getUserProjects", (req, res) => {
+                  const { srn } = req.body;
+                  console.log(srn);
+                  console.log("DAMAR");
+                  db.query(
+                    "SELECT * FROM projects where srn = ?",
+                    [srn],
+                    (err, results) => {
+                      if (err) {
+                        console.error("Error fetching user projects:", err);
+                        res
+                          .status(500)
+                          .json({ error: "Internal server error" });
+                      } else {
+                        res.status(200).json(results);
+                      }
                     }
-                  });
+                  );
                 });
 
                 // API endpoint to handle user data update
@@ -566,6 +664,36 @@ function useDatabase() {
             );
           }
         );
+      }
+    );
+    db.query(
+      `CREATE TABLE IF NOT EXISTS techstack (
+        srn VARCHAR(255) PRIMARY KEY,
+        react BOOLEAN DEFAULT false,
+        angular BOOLEAN DEFAULT false,
+        vue BOOLEAN DEFAULT false,
+        flutter BOOLEAN DEFAULT false,
+        django BOOLEAN DEFAULT false,
+        flask BOOLEAN DEFAULT false,
+        nodejs BOOLEAN DEFAULT false,
+        express BOOLEAN DEFAULT false,
+        rubyonrails BOOLEAN DEFAULT false,
+        php BOOLEAN DEFAULT false,
+        mysql BOOLEAN DEFAULT false,
+        mongodb BOOLEAN DEFAULT false,
+        swift BOOLEAN DEFAULT false,
+        reactnative BOOLEAN DEFAULT false
+      );`,
+      (createTechstackTableErr) => {
+        if (createTechstackTableErr) {
+          console.error(
+            "Error creating 'techstack' table:",
+            createTechstackTableErr
+          );
+          // Handle the error as needed
+        } else {
+          console.log("'techstack' table is ready.");
+        }
       }
     );
   });

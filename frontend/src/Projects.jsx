@@ -1,458 +1,18 @@
-// import React, { useState } from 'react';
-// import './Projects.css';
-// import Navbar from './Navbar';
-
-// export default function Projects() {
-//   const [projectName, setProjectName] = useState('');
-//   const [domainId, setDomainId] = useState('');
-
-//   const handleProjectNameChange = (e) => {
-//     setProjectName(e.target.value);
-//   };
-
-//   const handleDomainIdChange = (e) => {
-//     setDomainId(e.target.value);
-//   };
-
-//   const handleAddProject = async () => {
-//     try {
-//       const response = await fetch('http://localhost:3000/api/addProject', {
-//         method: 'POST',
-//         headers: {
-//           'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({ projectName, domainId }),
-//       });
-
-//       if (response.ok) {
-//         const data = await response.json();
-//         console.log('Project added successfully:', data);
-//         // Optionally, you can reset the input fields after a successful addition
-//         setProjectName('');
-//         setDomainId('');
-//       } else {
-//         console.error('Failed to add project:', response.statusText);
-//       }
-//     } catch (error) {
-//       console.error('Error adding project:', error.message);
-//     }
-//   };
-
-//   return (
-//     <div className="projects">
-//       <header>
-//         <h1>Projects</h1>
-//       </header>
-//       <Navbar />
-//       <div className="add-projects">
-//         <h2>Add Projects</h2>
-//         <div className="input-fields">
-//           <label htmlFor="projectName">Project Name:</label>
-//           <input
-//             type="text"
-//             id="projectName"
-//             value={projectName}
-//             onChange={handleProjectNameChange}
-//           />
-//           <label htmlFor="domainId">Domain ID:</label>
-//           <input
-//             type="text"
-//             id="domainId"
-//             value={domainId}
-//             onChange={handleDomainIdChange}
-//           />
-//         </div>
-//         <div className="buttonalign">
-//           <button onClick={handleAddProject}>ADD</button>
-//         </div>
-//         <hr className="black-line" />
-//       </div>
-//     </div>
-//   );
-// }
-
-// import React, { useState } from 'react';
-// import './Projects.css';
-// import Navbar from './Navbar';
-
-// export default function Projects() {
-//   const [projectName, setProjectName] = useState('');
-//   const [domainId, setDomainId] = useState('');
-//   const [searchBy, setSearchBy] = useState('projectName');
-
-//   const handleProjectNameChange = (e) => {
-//     setProjectName(e.target.value);
-//   };
-
-//   const handleDomainIdChange = (e) => {
-//     setDomainId(e.target.value);
-//   };
-
-//   const handleSearchByChange = (e) => {
-//     setSearchBy(e.target.value);
-//   };
-
-//   const handleAddProject = async () => {
-//     // Code for adding a project (you can keep your existing implementation here)
-//   };
-
-//   const handleFindProjects = async () => {
-//     // Logic to find projects based on selected search criteria (projectName or domainId)
-//     // Implement this function to fetch projects based on the selected criteria
-//     console.log('Searching projects by:', searchBy);
-//     console.log('Project Name:', projectName);
-//     console.log('Domain ID:', domainId);
-//   };
-
-//   return (
-//     <div className="projects">
-//       <header>
-//         <h1>Projects</h1>
-//       </header>
-//       <Navbar />
-//       <div className="add-projects">
-//         <h2>Add Projects</h2>
-//         <div className="input-fields">
-//           <label htmlFor="projectName">Project Name:</label>
-//           <input
-//             type="text"
-//             id="projectName"
-//             value={projectName}
-//             onChange={handleProjectNameChange}
-//           />
-//           <label htmlFor="domainId">Domain ID:</label>
-//           <input
-//             type="text"
-//             id="domainId"
-//             value={domainId}
-//             onChange={handleDomainIdChange}
-//           />
-//         </div>
-//         <div className="buttonalign">
-//           <button onClick={handleAddProject}>ADD</button>
-//         </div>
-//         <hr className="black-line" />
-
-//         <h2>Find Your Projects</h2>
-//         <div className="search-by">
-//           <label>
-//             <input
-//               type="radio"
-//               value="projectName"
-//               checked={searchBy === 'projectName'}
-//               onChange={handleSearchByChange}
-//             />
-//             Search by Project Name
-//           </label>
-//           <label>
-//             <input
-//               type="radio"
-//               value="domainId"
-//               checked={searchBy === 'domainId'}
-//               onChange={handleSearchByChange}
-//             />
-//             Search by Domain ID
-//           </label>
-//         </div>
-//         <div className="buttonalign">
-//           <button onClick={handleFindProjects}>Find Projects</button>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-// import React, { useState } from 'react';
-// import './Projects.css';
-// import Navbar from './Navbar';
-
-// export default function Projects() {
-//   const [projectName, setProjectName] = useState('');
-//   const [domainId, setDomainId] = useState('');
-//   const [searchBy, setSearchBy] = useState('projectName');
-//   const [searchInput, setSearchInput] = useState('');
-
-//   const handleProjectNameChange = (e) => {
-//     setProjectName(e.target.value);
-//   };
-
-//   const handleDomainIdChange = (e) => {
-//     setDomainId(e.target.value);
-//   };
-
-//   const handleSearchByChange = (e) => {
-//     setSearchBy(e.target.value);
-//     setSearchInput(''); // Reset the search input when changing search criteria
-//   };
-
-//   const handleSearchInputChange = (e) => {
-//     setSearchInput(e.target.value);
-//   };
-
-//   const handleAddProject = async () => {
-//     // Code for adding a project (you can keep your existing implementation here)
-//   };
-
-//   const handleFindProjects = async () => {
-//     // Logic to find projects based on selected search criteria (projectName or domainId)
-//     // Implement this function to fetch projects based on the selected criteria
-//     console.log('Searching projects by:', searchBy);
-//     console.log('Search Input:', searchInput);
-//   };
-
-//   return (
-//     <div className="projects">
-//       <header>
-//         <h1>Projects</h1>
-//       </header>
-//       <Navbar />
-//       <div className="add-projects">
-//         <h2>Add Projects</h2>
-//         <div className="input-fields">
-//           <label htmlFor="projectName">Project Name:</label>
-//           <input
-//             type="text"
-//             id="projectName"
-//             value={projectName}
-//             onChange={handleProjectNameChange}
-//           />
-//           <label htmlFor="domainId">Domain ID:</label>
-//           <input
-//             type="text"
-//             id="domainId"
-//             value={domainId}
-//             onChange={handleDomainIdChange}
-//           />
-//         </div>
-//         <div className="buttonalign">
-//           <button onClick={handleAddProject}>ADD</button>
-//         </div>
-//         <hr className="black-line" />
-
-//         <h2>Find Your Projects</h2>
-//         <div className="search-by">
-//           <label>
-//             <input
-//               type="radio"
-//               value="projectName"
-//               checked={searchBy === 'projectName'}
-//               onChange={handleSearchByChange}
-//             />
-//             Search by Project Name
-//           </label>
-//           <label>
-//             <input
-//               type="radio"
-//               value="domainId"
-//               checked={searchBy === 'domainId'}
-//               onChange={handleSearchByChange}
-//             />
-//             Search by Domain ID
-//           </label>
-//         </div>
-//         <div className="input-fields">
-//           <input
-//             type="text"
-//             placeholder={`Enter ${searchBy === 'projectName' ? 'Project Name' : 'Domain ID'}`}
-//             value={searchInput}
-//             onChange={handleSearchInputChange}
-//           />
-//         </div>
-//         <div className="buttonalign">
-//           <button onClick={handleFindProjects}>Find</button>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-// import React, { useState } from 'react';
-// import './Projects.css';
-// import Navbar from './Navbar';
-
-// export default function Projects() {
-//   const [projectName, setProjectName] = useState('');
-//   const [domainId, setDomainId] = useState('');
-//   const [searchBy, setSearchBy] = useState('projectName');
-//   const [searchInput, setSearchInput] = useState('');
-//   const [searchResult, setSearchResult] = useState([]);
-//   const [noResult, setNoResult] = useState(false);
-
-//   const handleProjectNameChange = (e) => {
-//     setProjectName(e.target.value);
-//   };
-
-//   const handleDomainIdChange = (e) => {
-//     setDomainId(e.target.value);
-//   };
-
-//   const handleSearchByChange = (e) => {
-//     setSearchBy(e.target.value);
-//     setSearchInput(''); // Reset the search input when changing search criteria
-//   };
-
-//   const handleSearchInputChange = (e) => {
-//     setSearchInput(e.target.value);
-//   };
-
-//   const handleAddProject = async () => {
-
-//     // Code for adding a project (you can keep your existing implementation here)
-//         try {
-//       const response = await fetch('http://localhost:3000/api/addProject', {
-//         method: 'POST',
-//         headers: {
-//           'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({ projectName, domainId }),
-//       });
-
-//       if (response.ok) {
-//         const data = await response.json();
-//         console.log('Project added successfully:', data);
-//         // Optionally, you can reset the input fields after a successful addition
-//         setProjectName('');
-//         setDomainId('');
-//       } else {
-//         console.error('Failed to add project:', response.statusText);
-//       }
-//     } catch (error) {
-//       console.error('Error adding project:', error.message);
-//     }
-//   };
-
-//   const handleFindProjects = async () => {
-//     try {
-//       const response = await fetch('http://localhost:3000/api/findProjects', {
-//         method: 'POST',
-//         headers: {
-//           'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({
-//           searchBy,
-//           searchText: searchInput,
-//         }),
-//       });
-
-//       if (response.ok) {
-//         const data = await response.json();
-//         if (data.length === 0) {
-//           setNoResult(true);
-//           setSearchResult([]);
-//         } else {
-//           setNoResult(false);
-//           setSearchResult(data);
-//         }
-//       } else {
-//         console.error('Failed to find projects:', response.statusText);
-//       }
-//     } catch (error) {
-//       console.error('Error finding projects:', error.message);
-//     }
-//   };
-
-//   return (
-//     <div className="projects">
-//       <header>
-//         <h1>Projects</h1>
-//       </header>
-//       <Navbar />
-//       <div className="add-projects">
-//         <h2>Add Projects</h2>
-//         <div className="input-fields">
-//           <label htmlFor="projectName">Project Name:</label>
-//           <input
-//             type="text"
-//             id="projectName"
-//             value={projectName}
-//             onChange={handleProjectNameChange}
-//           />
-//           <label htmlFor="domainId">Domain ID:</label>
-//           <input
-//             type="text"
-//             id="domainId"
-//             value={domainId}
-//             onChange={handleDomainIdChange}
-//           />
-//         </div>
-//         <div className="buttonalign">
-//           <button onClick={handleAddProject}>ADD</button>
-//         </div>
-//         <hr className="black-line" />
-
-//         <h2>Find Your Projects</h2>
-//         <div className="search-by">
-//           <label>
-//             <input
-//               type="radio"
-//               value="projectName"
-//               checked={searchBy === 'projectName'}
-//               onChange={handleSearchByChange}
-//             />
-//             Search by Project Name
-//           </label>
-//           <label>
-//             <input
-//               type="radio"
-//               value="domainId"
-//               checked={searchBy === 'domainId'}
-//               onChange={handleSearchByChange}
-//             />
-//             Search by Domain ID
-//           </label>
-//         </div>
-//         <div className="input-fields">
-//           <input
-//             type="text"
-//             placeholder={`Enter ${searchBy === 'projectName' ? 'Project Name' : 'Domain ID'}`}
-//             value={searchInput}
-//             onChange={handleSearchInputChange}
-//           />
-//         </div>
-//         <div className="buttonalign">
-//           <button onClick={handleFindProjects}>Find</button>
-//         </div>
-//         <div className="search-result">
-//           {noResult ? (
-//             <p>The project doesn't exist.</p>
-//           ) : (
-//             <table>
-//               <thead>
-//                 <tr>
-//                   <th>Project Name</th>
-//                   <th>Domain ID</th>
-//                   {/* Add more table headers as needed */}
-//                 </tr>
-//               </thead>
-//               <tbody>
-//               {searchResult.map((project, index) => (
-//                  <tr key={index}>
-//                  <td>{project.projectName}</td>
-//                  <td>{project.domainId}</td>
-//                  {/* Add more table data as needed */}
-//                 </tr>
-//                ))}
-
-//               </tbody>
-//             </table>
-//           )}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
 import React, { useState, useEffect } from "react";
 import "./Projects.css";
 import Navbar from "./Navbar";
 
+import { useSelector } from "react-redux";
 export default function Projects() {
   const [projectName, setProjectName] = useState("");
   const [domainId, setDomainId] = useState("");
+  const [srn, setSrn] = useState("");
   const [searchBy, setSearchBy] = useState("projectName");
   const [searchInput, setSearchInput] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [noResult, setNoResult] = useState(false);
   const [allProjects, setAllProjects] = useState([]);
-
+  const user = useSelector((state) => state.user);
   const handleProjectNameChange = (e) => {
     setProjectName(e.target.value);
   };
@@ -478,7 +38,7 @@ export default function Projects() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ projectName, domainId }),
+        body: JSON.stringify({ projectName, domainId, srn: user.srn }),
       });
 
       if (response.ok) {
@@ -487,6 +47,9 @@ export default function Projects() {
         // Optionally, you can reset the input fields after a successful addition
         setProjectName("");
         setDomainId("");
+        // setSrn("");
+        fetchAllProjects();
+        alert("Project added succesfully");
       } else {
         console.error("Failed to add project:", response.statusText);
       }
@@ -505,6 +68,7 @@ export default function Projects() {
         body: JSON.stringify({
           searchBy,
           searchText: searchInput,
+          srn: user.srn,
         }),
       });
 
@@ -529,7 +93,18 @@ export default function Projects() {
   };
   const fetchAllProjects = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/getUserProjects");
+      const response = await fetch(
+        "http://localhost:3000/api/getUserProjects",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            srn: user.srn,
+          }),
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
