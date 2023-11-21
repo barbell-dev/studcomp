@@ -26,12 +26,19 @@ db.connect((err) => {
   // API endpoint to get details of all students
   app.get("/api/dashboard", (req, res) => {
     // Retrieve all records from the signup_data table
-    db.query("SELECT * FROM signup_data", (err, results) => {
+    const query = `
+    SELECT signup_data.*, projects.domainName, projects.projectName
+    FROM signup_data
+    LEFT JOIN projects ON signup_data.srn = projects.srn`;
+    db.query(query, (err, results) => {
+      // console.log(results);
+
       if (err) {
         console.error("Error fetching signup_data:", err);
         res.status(500).json({ error: "Internal server error" });
       } else {
         // Send the list of users back to the client
+
         res.status(200).json(results);
       }
     });

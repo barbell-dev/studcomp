@@ -62,6 +62,7 @@ export default function Dashboard() {
       if (response.status === 200) {
         // Successfully fetched data
         setUserList(response.data);
+        // console.log(response.data.domainName);
       } else {
         // Handle other response statuses if needed
         console.error("Error fetching data. Status:", response.status);
@@ -87,6 +88,8 @@ export default function Dashboard() {
               <th>CGPA</th>
               <th>Email</th>
               <th>Github</th>
+              <th>Project Name</th>
+              <th>Domain Name</th>
               <th>Delete</th> {/* New column for the delete button */}
             </tr>
           </thead>
@@ -105,6 +108,12 @@ export default function Dashboard() {
                   ) : (
                     "Not available"
                   )}
+                </td>
+                <td className="dashboard-td">
+                  {user.projectName ? user.projectName : "Not available"}
+                </td>
+                <td className="dashboard-td">
+                  {user.domainName ? user.domainName : "Not available"}
                 </td>
                 <td className="delete-cell">
                   <button
