@@ -21,6 +21,7 @@ export default function Dashboard() {
           alert("Account has been deleted.");
           // Refresh the user list after deletion
           fetchData();
+          fetchCount();
         } else {
           alert("Error in deleting the account.");
         }
@@ -92,13 +93,13 @@ export default function Dashboard() {
           <tbody>
             {userList.map((user) => (
               <tr key={user.id}>
-                <td>{user.srn}</td>
-                <td>{user.name}</td>
-                <td>{user.gender}</td>
-                <td>{user.campus}</td>
-                <td>{user.cgpa}</td>
-                <td>{user.email}</td>
-                <td>
+                <td className="dashboard-td">{user.srn}</td>
+                <td className="dashboard-td">{user.name}</td>
+                <td className="dashboard-td">{user.gender}</td>
+                <td className="dashboard-td">{user.campus}</td>
+                <td className="dashboard-td">{user.cgpa}</td>
+                <td className="dashboard-td">{user.email}</td>
+                <td className="dashboard-td">
                   {user.githubLink ? (
                     <Link to={user.githubLink}>{user.githubLink}</Link>
                   ) : (

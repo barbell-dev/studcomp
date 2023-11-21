@@ -264,7 +264,7 @@ function Profile() {
             <label>
               <input
                 type="button"
-                value="Delete User"
+                value="Delete Account"
                 className="delete"
                 onClick={handleDelete}
               />

@@ -4,7 +4,7 @@
   justify-content: space-between; /* Adjust alignment as needed */
   align-items: center; /* Vertically center align items */
   background-color: #333;
-  padding: 10px 20px;
+  padding: 1px 2px;
   color: white;
 }
 table {
@@ -23,7 +23,7 @@ table {
     "Lucida Sans", Arial, sans-serif;
   list-style: none;
   padding-bottom: 20px;
-  margin: -8px;
+  margin: -19px;
   display: flex;
   position: absolute;
   margin-left: -700px;
@@ -55,10 +55,7 @@ table {
   background-color: wheat;
   color: black;
 }
-.nav-links #techstack:hover {
-  background-color: wheat;
-  color: black;
-}
+
 .no-decoration {
   text-decoration: none;
   color: inherit;

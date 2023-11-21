@@ -506,9 +506,27 @@ function useDatabase() {
                       } else {
                         if (results.affectedRows > 0) {
                           // Account deleted successfully
-                          res
-                            .status(200)
-                            .json({ message: "Account deleted successfully" });
+                          db.query(
+                            "DELETE FROM projects WHERE srn = ?",
+                            [srn],
+                            (err, results) => {
+                              if (err) {
+                                console.error(
+                                  "Error deleting the account:",
+                                  err
+                                );
+                                res
+                                  .status(500)
+                                  .json({ error: "Internal server error" });
+                              } else {
+                                res
+                                  .status(200)
+                                  .json({
+                                    message: "Account deleted successfully",
+                                  });
+                              }
+                            }
+                          );
                         } else {
                           // No user found with the specified SRN
                           res.status(404).json({ error: "User not found" });

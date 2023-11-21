@@ -45,14 +45,6 @@ export default function Navbar() {
                       Domains
                     </Link>
                   </li>
-                  <li id="techstack">
-                    <Link
-                      to="http://localhost:5173/techstack"
-                      className="no-decoration"
-                    >
-                      Tech Stack
-                    </Link>
-                  </li>
                 </ul>
               </td>
             </tr>

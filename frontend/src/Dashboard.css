@@ -23,7 +23,7 @@ table {
 }
 
 th,
-td {
+.dashboard td {
   border: 1px solid #ddd;
   padding: 8px;
 }

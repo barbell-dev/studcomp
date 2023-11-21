@@ -5,3 +5,11 @@
   text-align: center;
   margin-top: 50px;
 }
+.teams .create-team #h2 {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  text-align: center;
+}
+.teams .create-team .black-line {
+  color: #000;
+}

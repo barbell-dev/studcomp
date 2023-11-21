@@ -32,6 +32,7 @@ export default function Projects() {
 
   const handleAddProject = async () => {
     // Code for adding a project (you can keep your existing implementation here)
+
     try {
       const response = await fetch("http://localhost:3000/api/addProject", {
         method: "POST",

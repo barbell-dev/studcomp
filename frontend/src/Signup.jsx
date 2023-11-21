@@ -95,7 +95,10 @@ function Signup() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!formData.email.includes("gmail.com")) {
+    if (
+      !formData.email.includes("gmail.com") &&
+      !formData.email.endsWith("@gmail.com")
+    ) {
       console.error(
         "Invalid email format. Please include 'gmail.com' in the email."
       );
@@ -350,175 +353,7 @@ function Signup() {
                 </label>
               </div>
               <br />
-              <div>
-                {/* React */}
-                <label className="react">
-                  <input
-                    type="checkbox"
-                    name="techstack"
-                    value="react"
-                    checked={formData.techstack.react}
-                    onChange={handleInputChange}
-                  />
-                  React
-                </label>
 
-                {/* Angular */}
-                <label className="angular">
-                  <input
-                    type="checkbox"
-                    name="techstack"
-                    value="angular"
-                    checked={formData.techstack.angular}
-                    onChange={handleInputChange}
-                  />
-                  Angular
-                </label>
-
-                {/* Vue */}
-                <label className="vue">
-                  <input
-                    type="checkbox"
-                    name="techstack"
-                    value="vue"
-                    checked={formData.techstack.vue}
-                    onChange={handleInputChange}
-                  />
-                  Vue
-                </label>
-
-                {/* Flutter */}
-                <label className="flutter">
-                  <input
-                    type="checkbox"
-                    name="techstack"
-                    value="flutter"
-                    checked={formData.techstack.flutter}
-                    onChange={handleInputChange}
-                  />
-                  Flutter
-                </label>
-
-                {/* Django */}
-                <label className="django">
-                  <input
-                    type="checkbox"
-                    name="techstack"
-                    value="django"
-                    checked={formData.techstack.django}
-                    onChange={handleInputChange}
-                  />
-                  Django
-                </label>
-
-                {/* Flask */}
-                <label className="flask">
-                  <input
-                    type="checkbox"
-                    name="techstack"
-                    value="flask"
-                    checked={formData.techstack.flask}
-                    onChange={handleInputChange}
-                  />
-                  Flask
-                </label>
-
-                {/* NodeJS */}
-                <label className="nodejs">
-                  <input
-                    type="checkbox"
-                    name="techstack"
-                    value="nodejs"
-                    checked={formData.techstack.nodejs}
-                    onChange={handleInputChange}
-                  />
-                  NodeJS
-                </label>
-
-                {/* Express */}
-                <label className="express">
-                  <input
-                    type="checkbox"
-                    name="techstack"
-                    value="express"
-                    checked={formData.techstack.express}
-                    onChange={handleInputChange}
-                  />
-                  Express
-                </label>
-
-                {/* Ruby on Rails */}
-                <label className="rails">
-                  <input
-                    type="checkbox"
-                    name="techstack"
-                    value="rails"
-                    checked={formData.techstack.rails}
-                    onChange={handleInputChange}
-                  />
-                  Ruby on Rails \
-                </label>
-
-                {/* PHP */}
-                <label className="php">
-                  <input
-                    type="checkbox"
-                    name="techstack"
-                    value="php"
-                    checked={formData.techstack.php}
-                    onChange={handleInputChange}
-                  />
-                  PHP
-                </label>
-
-                {/* MySQL */}
-                <label className="mysql">
-                  <input
-                    type="checkbox"
-                    name="techstack"
-                    value="mysql"
-                    checked={formData.techstack.mysql}
-                    onChange={handleInputChange}
-                  />
-                  MySQL
-                </label>
-
-                {/* MongoDB */}
-                <label className="mongodb">
-                  <input
-                    type="checkbox"
-                    name="techstack"
-                    value="mongodb"
-                    checked={formData.techstack.mongodb}
-                    onChange={handleInputChange}
-                  />
-                  MongoDB
-                </label>
-
-                {/* Swift */}
-                <label className="swift">
-                  <input
-                    type="checkbox"
-                    name="techstack"
-                    value="swift"
-                    checked={formData.techstack.swift}
-                    onChange={handleInputChange}
-                  />
-                  Swift
-                </label>
-
-                {/* React Native */}
-                <label className="reactnative">
-                  <input
-                    type="checkbox"
-                    name="techstack"
-                    value="reactnative"
-                    checked={formData.techstack.reactnative}
-                    onChange={handleInputChange}
-                  />
-                  React Native
-                </label>
-              </div>
               <div>
                 <label>
                   <input type="submit" value="Submit" required />
