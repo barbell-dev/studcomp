@@ -489,52 +489,61 @@ function useDatabase() {
                     }
                   );
                 });
-
                 app.delete("/api/delete-account", (req, res) => {
                   const { srn } = req.body;
 
-                  // Add logic to delete the user with the specified SRN from the 'signup_data' table
-                  db.query(
-                    "DELETE FROM signup_data WHERE srn = ?",
-                    [srn],
-                    (err, results) => {
-                      if (err) {
-                        console.error("Error deleting account:", err);
-                        res
-                          .status(500)
-                          .json({ error: "Internal server error" });
-                      } else {
-                        if (results.affectedRows > 0) {
-                          // Account deleted successfully
-                          db.query(
-                            "DELETE FROM projects WHERE srn = ?",
-                            [srn],
-                            (err, results) => {
-                              if (err) {
-                                console.error(
-                                  "Error deleting the account:",
-                                  err
-                                );
-                                res
-                                  .status(500)
-                                  .json({ error: "Internal server error" });
-                              } else {
-                                res
-                                  .status(200)
-                                  .json({
+                  // Update the corresponding srn values in the team_audit table
+                  const updateTeamAuditQuery =
+                    "UPDATE team_audit SET srn = 'DELETED' WHERE srn = ?";
+                  db.query(updateTeamAuditQuery, [srn], (updateErr) => {
+                    if (updateErr) {
+                      console.error(
+                        "Error updating team_audit records:",
+                        updateErr
+                      );
+                      res.status(500).json({ error: "Internal server error" });
+                    } else {
+                      // Now you can safely delete the user from the signup_data table
+                      const deleteUserQuery =
+                        "DELETE FROM signup_data WHERE srn = ?";
+                      db.query(deleteUserQuery, [srn], (deleteErr, results) => {
+                        if (deleteErr) {
+                          console.error("Error deleting account:", deleteErr);
+                          res
+                            .status(500)
+                            .json({ error: "Internal server error" });
+                        } else {
+                          if (results.affectedRows > 0) {
+                            // Account deleted successfully
+                            db.query(
+                              "DELETE FROM projects WHERE srn = ?",
+                              [srn],
+                              (err) => {
+                                if (err) {
+                                  console.error(
+                                    "Error deleting projects:",
+                                    err
+                                  );
+                                  res
+                                    .status(500)
+                                    .json({ error: "Internal server error" });
+                                } else {
+                                  res.status(200).json({
                                     message: "Account deleted successfully",
                                   });
+                                }
                               }
-                            }
-                          );
-                        } else {
-                          // No user found with the specified SRN
-                          res.status(404).json({ error: "User not found" });
+                            );
+                          } else {
+                            // No user found with the specified SRN
+                            res.status(404).json({ error: "User not found" });
+                          }
                         }
-                      }
+                      });
                     }
-                  );
+                  });
                 });
+
                 // API endpoint to fetch all domains
                 app.get("/api/domains", (req, res) => {
                   db.query(

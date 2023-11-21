@@ -230,7 +230,6 @@ db.connect((err) => {
       }
     });
   });
-
   // New API endpoint to join a team
   app.post("/api/join-team", (req, res) => {
     const { teamID, srn } = req.body;
@@ -253,13 +252,23 @@ db.connect((err) => {
               console.error("Error joining team:", joinErr);
               res.status(500).json({ error: "Internal server error" });
             } else {
-              // ("Team joined succesfully");
+              // Insert into team_audit with actionType 'join'
+              const teamAuditQuery =
+                "INSERT INTO team_audit (actionType, teamID, srn) VALUES ('JOIN', ?, ?)";
+              db.query(teamAuditQuery, [teamID, srn], (auditErr) => {
+                if (auditErr) {
+                  console.error(
+                    "Error recording team join in audit:",
+                    auditErr
+                  );
+                }
+              });
+
               res.status(201).json({ message: "Joined team successfully" });
             }
           });
         } else {
           // Team already has 4 members
-          alert("Team is full cant join.");
           res.status(400).json({ error: "Team is full, cannot join" });
         }
       }
